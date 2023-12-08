@@ -1,40 +1,20 @@
-# Winter-kitura
 
-```sh
-
-
-if [ ! -d ~/Winter-kitura ]; then cd ~/ && git clone https://github.com/AndyInAi/Winter-kitura.git; fi
-
-
-# 运行
-
-cd ~/Winter-kitura && chmod +x ./Winter-kitura && ./Winter-kitura
-
-# Starting HTTP server at http://0.0.0.0:8080/
-
-
-# 测试
-
-curl http://localhost:8080/
-
-
-# 或者编译源代码后运行
-
-
-# 安装编译环境
-
-echo "
-  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
-  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
-" > /etc/apt/sources.list
+(
+	echo "
+	  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+	  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+	  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+	  deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+	" > /etc/apt/sources.list
+)
 
 export DEBIAN_FRONTEND=noninteractive
 
 apt update -y
 
 apt install -y clang libicu-dev libcurl4-openssl-dev libssl-dev libpython2.7
+
+# 安装 swift
 
 (
 	if [ ! -f /usr/bin/swift ]; then
@@ -63,7 +43,21 @@ apt install -y clang libicu-dev libcurl4-openssl-dev libssl-dev libpython2.7
 )
 
 
-# 编译源代码
+# 创建 Winter-kitura
+
+mkdir -p ~/Winter-kitura && cd ~/Winter-kitura && swift package init --type executable
+
+
+# 调试 
+cd ~/Winter-kitura && swift run
+
+
+# 清除
+
+cd ~/Winter-kitura && swift package clean 
+
+
+# 编译
 
 cd ~/Winter-kitura && swift build -c release --static-swift-stdlib
 
@@ -73,11 +67,6 @@ cd ~/Winter-kitura && swift build -c release --static-swift-stdlib
 ./.build/release/Winter-kitura
 
 
-# Starting HTTP server at http://0.0.0.0:8080/
 
 
-# 测试
-curl http://localhost:8080/
 
-
-```
